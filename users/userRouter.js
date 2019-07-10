@@ -1,4 +1,4 @@
-const express = 'express';
+const express = require("express");
 
 const router = express.Router();
 
@@ -10,8 +10,8 @@ router.post('/:id/posts', (req, res) => {
 
 });
 
-router.get('/', (req, res) => {
-
+router.get('/some', (req, res) => {
+    res.send(`<h2>Some</h2>`)
 });
 
 router.get('/:id', (req, res) => {
