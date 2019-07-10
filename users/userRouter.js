@@ -23,7 +23,7 @@ router.post("/:id/posts", validateUserId, validatePost, async (req, res) => {
     .then(data => {
       res.status(201).json(data);
     })
-    .catch(error => {
+    .catch(err => {
       res.status(500).json({ message: "Unable to add post." });
     });
 });
@@ -57,7 +57,7 @@ router.get("/:id/posts", validateUserId, async (req, res) => {
     .then(data => {
       res.status(200).json(data);
     })
-    .catch(error => {
+    .catch(err => {
       res.status(500).json({
         message: `Can't retrieve posts for user with ID: ${req.params.id}.`
       });
@@ -85,8 +85,7 @@ router.put("/:id", validateUserId, validateUser, async (req, res) => {
         res.status(201).json(data);
       });
     })
-    .catch(error => {
-      console.log(error);
+    .catch(err => {
       res.status(500).json({
         message: `Can't update user with ID: ${req.params.id}.`
       });
