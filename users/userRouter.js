@@ -4,7 +4,8 @@ const User = require("./userDb");
 const Post = require("../posts/postDb");
 
 router.post("/", validateUser, async (req, res) => {
-  User.insert(req.body.name)
+  const name = req.body;
+  User.insert(name)
     .then(data => {
       User.getById(data.id).then(data => {
         res.status(201).json(data);
