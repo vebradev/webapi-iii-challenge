@@ -40,7 +40,20 @@ router.delete("/:id", validatePostId, async (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", validatePostId, validatePost, async (req, res) => {
+  const newPost = req.body;
+  Post.update(req.params.id, newPost)
+    .then(data => {
+      Post.getById(req.params.id).then(data => {
+        res.status(200).json(data);
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Can't update post."
+      });
+    });
+});
 
 // custom middleware
 
@@ -51,6 +64,16 @@ async function validatePostId(req, res, next) {
     next();
   } else {
     res.status(400).json({ message: "Invalid post ID" });
+  }
+}
+
+function validatePost(req, res, next) {
+  if (Object.keys(req.body) == 0) {
+    res.status(400).json({ message: "Missing post data" });
+  } else if (req.body.text) {
+    next();
+  } else {
+    res.status(400).json({ message: "Missing required text field" });
   }
 }
 
